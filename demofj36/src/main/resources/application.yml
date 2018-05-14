@@ -1,0 +1,20 @@
+server:
+  port: 9090
+
+
+spring:
+  data:
+    mongodb:
+      uri:  mongodb://localhost/demo
+  rabbitmq:
+    fila.alunos: alunos
+    topico.nome: eventos
+    routingKey.alunos: event.aluno
+management:
+  security:
+    enabled: false
+security:
+  basic:
+    enabled: false
+
+

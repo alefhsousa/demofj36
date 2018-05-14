@@ -1,0 +1,31 @@
+rabbitmq:
+  image: rabbitmq:3.6-management
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+mongodb:
+  image: mongo:latest
+  ports:
+    - "27017:27017"
+  command: mongod --smallfiles
+
+judith:
+  build: ./demofj36
+  ports:
+    - "9099:9090"
+  links:
+    - rabbitmq
+    - mongodb
+  environment:
+         SPRING_DATA_MONGODB_URI: mongodb://mongodb/demo
+         SPRING_RABBITMQ_HOST: rabbitmq
+
+client:
+  build: ./client-demo
+  ports:
+    - "8080:8080"
+  links:
+    - rabbitmq
+  environment:
+    SPRING_DATA_MONGODB_URI: mongodb://mongodb/demo
+    SPRING_RABBITMQ_HOST: rabbitmq
